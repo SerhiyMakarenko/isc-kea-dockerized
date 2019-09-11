@@ -8,5 +8,5 @@ docker run -d serhiymakarenko/isc-kea-dhcp4-server:latest
 ```
 
 # Related
-- (Debian Repository Setup)[https://cloudsmith.io/~isc/repos/kea-1-6/setup/#formats-deb];
-- (Kea packages maintened by ISC)[https://cloudsmith.io/~isc/repos/kea-1-6/packages/].
+- [Debian Repository Setup](https://cloudsmith.io/~isc/repos/kea-1-6/setup/#formats-deb);
+- [Kea packages maintened by ISC](https://cloudsmith.io/~isc/repos/kea-1-6/packages/).
