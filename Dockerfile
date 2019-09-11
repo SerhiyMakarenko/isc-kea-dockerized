@@ -17,8 +17,6 @@ RUN apt-get update && \
     apt-get update && \
     apt-get install -y --no-install-recommends --no-install-suggests isc-kea-dhcp-ddns-server && \
     apt-get purge -y --auto-remove apt-utils gnupg curl debian-keyring apt-transport-https ca-certificates && \
-    apt-get clean && \
-    apt-get clean autoclean && \
     rm -rf /var/lib/apt/lists/* && \
     mkdir /var/run/kea
 
