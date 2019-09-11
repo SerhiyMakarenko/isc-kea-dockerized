@@ -1,5 +1,7 @@
 # General
-ISC Kea DHCP IPv4 server dockerized using ISC maintained packages to compensate lag behind official ISC releases for Debian 10 (Buster).
+Kea is an IPv4 DHCP server developed by Internet Systems Consortium providing a very high-performance with PostgreSQL, MySQL and memfile backends. 
+
+This container provides the IPv4 DHCP server dockerized using ISC maintained packages to compensate lag behind official ISC releases for Debian 10 (Buster).
 
 # Usage
 To run container you need to execute command listed below:
