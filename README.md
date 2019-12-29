@@ -5,6 +5,15 @@ Kea is an IPv4 DHCP server developed by Internet Systems Consortium providing a 
 
 This container provides the ISC Kea DHCP server REST API service dockerized using ISC maintained packages to compensate lag behind official ISC releases for Debian 10 (Buster).
 
+# Details
+Currently, the image supports the following CPU architectures:
+ - x86_64 (amd64);
+ - armhf (arm32v6);
+ - arm7l (arm32v6);
+ - aarch6 (arm64v8).
+
+This means that the image can be used on regular PC's with Intel CPU as well as on single-board computers like Raspberry Pi with ARM CPU.
+
 # Usage
 To run container you need to execute command listed below:
 ```
