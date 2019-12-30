@@ -38,7 +38,7 @@ RUN cd kea-${KEA_VERSION} && \
         --enable-generate-parser \
         --disable-dependency-tracking \
         --without-werror && \
-    make -j7 && \
+    make -j3 && \
     make install-strip && \
     echo "/usr/local/lib/hooks" > /etc/ld.so.conf.d/kea.conf && \
     ldconfig
