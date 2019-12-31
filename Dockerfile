@@ -45,7 +45,12 @@ RUN cd kea-${KEA_VERSION} && \
 
 RUN cd /usr/lib && \
     mkdir isc-kea-dhcp-ddns-libs && \
-    for lib in asiodns asiolink cc cfgclient cryptolink database dhcp++ dhcp_ddns dhcpsrv dns++ eval exceptions hooks http log mysql pgsql process stats threads util-io util; do for libso in `ls libkea-${lib}.so*`; do mv ${libso} isc-kea-dhcp-ddns-libs/; done; done
+    for lib in asiodns asiolink cc cfgclient cryptolink database dhcp++ dhcp_ddns dhcpsrv dns++ eval exceptions hooks http log mysql pgsql process stats threads util-io util; do for libso in `ls libkea-${lib}.so*`; do mv ${libso} isc-kea-dhcp-ddns-libs/; done; done && \
+    cd /usr/lib/kea/hooks && \
+    mkdir isc-kea-dhcp-ddns-hooks && \
+    for hook in libdhcp_ha libdhcp_lease_cmds libdhcp_mysql_cb libdhcp_stat_cmds; do mv ${hook}.so isc-kea-dhcp-ddns-hooks/; done
+
+
 
 FROM debian:10-slim
 LABEL maintainer="serhiy.makarenko@me.com"
@@ -57,13 +62,14 @@ RUN apt-get update && \
     liblog4cplus-1.1-9 libssl1.1 libboost-system1.67.0 && \
     rm -rf /var/lib/apt/lists/*
 
-RUN mkdir -p /var/lib/run/kea && mkdir /etc/kea && mkdir /usr/lib/kea
+RUN mkdir -p /var/lib/run/kea && mkdir /etc/kea && mkdir -p /usr/lib/kea/hooks
 
 COPY --from=builder /usr/lib/isc-kea-dhcp-ddns-libs /usr/lib/
+COPY --from=builder /usr/lib/kea/hooks/isc-kea-dhcp-ddns-hooks /usr/lib/kea/hooks
 COPY --from=builder /usr/sbin/kea-lfc /usr/sbin
-COPY --from=builder /usr/share/man/man8/kea-lfc.8 /usr/share/man/man8
-COPY --from=builder /etc/kea/kea-dhcp-ddns.conf /etc/kea
 COPY --from=builder /usr/sbin/kea-dhcp-ddns /usr/sbin
+COPY --from=builder /etc/kea/kea-dhcp-ddns.conf /etc/kea
+COPY --from=builder /usr/share/man/man8/kea-lfc.8 /usr/share/man/man8
 COPY --from=builder /usr/share/man/man8/kea-dhcp-ddns.8 /usr/share/man/man8
 
 ENTRYPOINT ["/usr/sbin/kea-dhcp-ddns"]
