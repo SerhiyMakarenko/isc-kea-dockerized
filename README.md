@@ -21,5 +21,5 @@ docker run -d --name isc-kea-ctrl-agent --net=host -v /path/to/kea/configs:/etc/
 ```
 
 # Related
-- [Debian Repository Setup](https://cloudsmith.io/~isc/repos/kea-1-6/setup/#formats-deb);
-- [Kea packages maintened by ISC](https://cloudsmith.io/~isc/repos/kea-1-6/packages/).
+- [Kea build on Debian](https://kb.isc.org/docs/kea-build-on-debian);
+- [Installing Kea](https://kb.isc.org/docs/installing-kea).
