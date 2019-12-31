@@ -26,7 +26,7 @@ RUN cd kea-${KEA_VERSION} && \
     ./configure \
         --prefix=/usr \
         --sysconfdir=/etc \
-        --localstatedir=/var/lib \
+        --localstatedir=/var \
         --with-openssl \
         --with-mysql \
         --with-pgsql \
@@ -60,7 +60,7 @@ RUN apt-get update && \
     liblog4cplus-1.1-9 libssl1.1 libboost-system1.67.0 && \
     rm -rf /var/lib/apt/lists/*
 
-RUN mkdir -p /var/lib/run/kea && mkdir /etc/kea && mkdir -p /usr/lib/kea/hooks
+RUN mkdir /var/run/kea && mkdir /var/lib/kea && mkdir /etc/kea
 
 COPY --from=builder /usr/lib/isc-kea-ctrl-agent-libs /usr/lib/
 COPY --from=builder /usr/lib/kea/hooks/isc-kea-ctrl-agent-hooks /usr/lib/kea/hooks
