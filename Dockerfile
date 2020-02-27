@@ -1,10 +1,10 @@
 # The MIT License
 #
-# Copyright (c) 2019, Serhiy Makarenko
+# Copyright (c) 2020, Serhiy Makarenko
 
 FROM debian:10-slim AS builder
 
-ARG KEA_VERSION=1.6.1
+ARG KEA_VERSION=1.6.2
 ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && \
