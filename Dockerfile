@@ -44,23 +44,11 @@ RUN cd kea-${KEA_VERSION} && \
     ldconfig
 
 RUN cd /usr/lib && \
-    mkdir isc-kea-dhcp-ddns-libs && \
-    for lib in asiodns asiolink cc cfgclient cryptolink database dhcp++ dhcp_ddns dhcpsrv dns++ eval exceptions hooks http log mysql pgsql process stats threads util-io util; do for libso in `ls libkea-${lib}.so*`; do mv ${libso} isc-kea-dhcp-ddns-libs/; done; done && \
+    mkdir isc-kea-common-libs && \
+    for lib in asiodns asiolink cc cfgclient cryptolink database dhcp++ dhcp_ddns dhcpsrv dns++ eval exceptions hooks http log mysql pgsql process stats threads util-io util; do for libso in `ls libkea-${lib}.so*`; do mv ${libso} isc-kea-common-libs/; done; done && \
     cd /usr/lib/kea/hooks && \
-    mkdir isc-kea-dhcp-ddns-hooks && \
-    for hook in libdhcp_ha libdhcp_lease_cmds libdhcp_mysql_cb libdhcp_stat_cmds; do mv ${hook}.so isc-kea-dhcp-ddns-hooks/; done && \
-    cd /usr/lib && \
-    mkdir isc-kea-ctrl-agent-libs && \
-    for lib in asiodns asiolink cc cfgclient cryptolink database dhcp++ dhcp_ddns dhcpsrv dns++ eval exceptions hooks http log mysql pgsql process stats threads util-io util; do for libso in `ls libkea-${lib}.so*`; do mv ${libso} isc-kea-ctrl-agent-libs/; done; done && \
-    cd /usr/lib/kea/hooks && \
-    mkdir isc-kea-ctrl-agent-hooks && \
-    for hook in libdhcp_ha libdhcp_lease_cmds libdhcp_mysql_cb libdhcp_stat_cmds; do mv ${hook}.so isc-kea-ctrl-agent-hooks/; done && \
-    cd /usr/lib && \
-    mkdir isc-kea-dhcp4-libs && \
-    for lib in asiodns asiolink cc cfgclient cryptolink database dhcp++ dhcp_ddns dhcpsrv dns++ eval exceptions hooks http log mysql pgsql process stats threads util-io util; do for libso in `ls libkea-${lib}.so*`; do mv ${libso} isc-kea-dhcp4-libs/; done; done && \
-    cd /usr/lib/kea/hooks && \
-    mkdir isc-kea-dhcp4-hooks && \
-    for hook in libdhcp_ha libdhcp_lease_cmds libdhcp_mysql_cb libdhcp_stat_cmds; do mv ${hook}.so isc-kea-dhcp4-hooks/; done
+    mkdir isc-kea-common-hooks && \
+    for hook in libdhcp_ha libdhcp_lease_cmds libdhcp_mysql_cb libdhcp_stat_cmds; do mv ${hook}.so isc-kea-common-hooks/; done
 
 
 
@@ -76,8 +64,8 @@ RUN apt-get update && \
 
 RUN mkdir /var/run/kea && mkdir /var/lib/kea && mkdir /etc/kea
 
-COPY --from=builder /usr/lib/isc-kea-dhcp-ddns-libs /usr/lib/
-COPY --from=builder /usr/lib/kea/hooks/isc-kea-dhcp-ddns-hooks /usr/lib/kea/hooks
+COPY --from=builder /usr/lib/isc-kea-common-libs /usr/lib/
+COPY --from=builder /usr/lib/kea/hooks/isc-kea-common-hooks /usr/lib/kea/hooks
 COPY --from=builder /usr/sbin/kea-lfc /usr/sbin
 COPY --from=builder /usr/sbin/kea-dhcp-ddns /usr/sbin
 COPY --from=builder /etc/kea/kea-dhcp-ddns.conf /etc/kea
@@ -99,8 +87,8 @@ RUN apt-get update && \
 
 RUN mkdir /var/run/kea && mkdir /var/lib/kea && mkdir /etc/kea
 
-COPY --from=builder /usr/lib/isc-kea-ctrl-agent-libs /usr/lib/
-COPY --from=builder /usr/lib/kea/hooks/isc-kea-ctrl-agent-hooks /usr/lib/kea/hooks
+COPY --from=builder /usr/lib/isc-kea-common-libs /usr/lib/
+COPY --from=builder /usr/lib/kea/hooks/isc-kea-common-hooks /usr/lib/kea/hooks
 COPY --from=builder /usr/sbin/kea-lfc /usr/sbin
 COPY --from=builder /usr/sbin/kea-shell /usr/sbin
 COPY --from=builder /usr/sbin/kea-ctrl-agent /usr/sbin
@@ -124,8 +112,8 @@ RUN apt-get update && \
 
 RUN mkdir /var/run/kea && mkdir /var/lib/kea && mkdir /etc/kea
 
-COPY --from=builder /usr/lib/isc-kea-dhcp4-libs /usr/lib/
-COPY --from=builder /usr/lib/kea/hooks/isc-kea-dhcp4-hooks /usr/lib/kea/hooks
+COPY --from=builder /usr/lib/isc-kea-common-libs /usr/lib/
+COPY --from=builder /usr/lib/kea/hooks/isc-kea-common-hooks /usr/lib/kea/hooks
 COPY --from=builder /usr/sbin/kea-lfc /usr/sbin
 COPY --from=builder /usr/sbin/kea-dhcp4 /usr/sbin
 COPY --from=builder /etc/kea/kea-dhcp4.conf /etc/kea
