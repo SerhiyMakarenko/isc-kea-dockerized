@@ -4,7 +4,7 @@
 
 FROM debian:10-slim AS builder
 
-ARG KEA_VERSION=1.8.2
+ARG KEA_VERSION=2.0.0
 ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && \
@@ -122,3 +122,26 @@ COPY --from=builder /usr/share/man/man8/kea-dhcp4.8 /usr/share/man/man8
 
 ENTRYPOINT ["/usr/sbin/kea-dhcp4"]
 CMD ["-c", "/etc/kea/kea-dhcp4.conf"]
+
+FROM debian:10-slim as isc-kea-dhcp6-server
+LABEL maintainer="serhiy.makarenko@me.com"
+
+ARG DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends --no-install-suggests \
+    liblog4cplus-1.1-9 libssl1.1 libboost-system1.67.0 libmariadb3 libpq5 && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN mkdir /var/run/kea && mkdir /var/lib/kea && mkdir /etc/kea
+
+COPY --from=builder /usr/lib/isc-kea-common-libs /usr/lib/
+COPY --from=builder /usr/lib/kea/hooks/isc-kea-common-hooks /usr/lib/kea/hooks
+COPY --from=builder /usr/sbin/kea-lfc /usr/sbin
+COPY --from=builder /usr/sbin/kea-dhcp6 /usr/sbin
+COPY --from=builder /etc/kea/kea-dhcp6.conf /etc/kea
+COPY --from=builder /usr/share/man/man8/kea-lfc.8 /usr/share/man/man8
+COPY --from=builder /usr/share/man/man8/kea-dhcp6.8 /usr/share/man/man8
+
+ENTRYPOINT ["/usr/sbin/kea-dhcp6"]
+CMD ["-c", "/etc/kea/kea-dhcp6.conf"]
