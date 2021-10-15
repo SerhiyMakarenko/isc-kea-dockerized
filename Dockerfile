@@ -45,7 +45,7 @@ RUN cd kea-${KEA_VERSION} && \
 
 RUN cd /usr/lib && \
     mkdir isc-kea-common-libs && \
-    for lib in asiodns asiolink cc cfgclient cryptolink database dhcp++ dhcp_ddns dhcpsrv dns++ eval exceptions hooks http log mysql pgsql process stats threads util-io util; do for libso in `ls libkea-${lib}.so*`; do mv ${libso} isc-kea-common-libs/; done; done && \
+    for lib in asiodns asiolink cc cfgclient cryptolink d2srv database dhcp++ dhcp_ddns dhcpsrv dns++ eval exceptions hooks http log mysql pgsql process stats threads util-io util; do for libso in `ls libkea-${lib}.so*`; do mv ${libso} isc-kea-common-libs/; done; done && \
     cd /usr/lib/kea/hooks && \
     mkdir isc-kea-common-hooks && \
     for hook in libdhcp_ha libdhcp_lease_cmds libdhcp_mysql_cb libdhcp_stat_cmds; do mv ${hook}.so isc-kea-common-hooks/; done
